@@ -15,11 +15,12 @@ namespace MarrowCauldron
             HarmonyInstance.PatchAll(typeof(MarrowCauldron));
 
             InjectElixirs();
-
+#if DEBUG
             #region AntiAntiHeadset
             HarmonyInstance.Patch(typeof(ControllerRig).GetProperty("IsPaused").GetSetMethod(), typeof(MarrowCauldron).GetMethod(nameof(DontRunMe)).ToNewHarmonyMethod());
             HarmonyInstance.Patch(typeof(Control_GlobalTime).GetMethod("PAUSE"), typeof(MarrowCauldron).GetMethod(nameof(DontRunMe)).ToNewHarmonyMethod());
             #endregion
+#endif
         }
 
         public void InjectElixirs()
