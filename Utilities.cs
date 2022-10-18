@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using UnityEngine;
 
-namespace PalletFlasks
+namespace MarrowCauldron
 {
     public static class Utilities
     {

@@ -1,29 +1,24 @@
-﻿using HarmonyLib;
-using MelonLoader;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using SLZ.Marrow.SceneStreaming;
-using SLZ.Marrow.Warehouse;
+﻿using MelonLoader;
 using SLZ.Rig;
 using System;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
 
-namespace PalletFlasks
+namespace MarrowCauldron
 {
-    public class PalletFlasks : MelonMod
+    public class MarrowCauldron : MelonMod
     {
         public override void OnInitializeMelon()
         {
             base.OnInitializeMelon();
-            HarmonyInstance.PatchAll(typeof(PalletFlasks));
+            HarmonyInstance.PatchAll(typeof(MarrowCauldron));
 
             InjectElixirs();
 
             #region AntiAntiHeadset
-            HarmonyInstance.Patch(typeof(ControllerRig).GetProperty("IsPaused").GetSetMethod(), typeof(PalletFlasks).GetMethod(nameof(DontRunMe)).ToNewHarmonyMethod());
-            HarmonyInstance.Patch(typeof(Control_GlobalTime).GetMethod("PAUSE"), typeof(PalletFlasks).GetMethod(nameof(DontRunMe)).ToNewHarmonyMethod());
+            HarmonyInstance.Patch(typeof(ControllerRig).GetProperty("IsPaused").GetSetMethod(), typeof(MarrowCauldron).GetMethod(nameof(DontRunMe)).ToNewHarmonyMethod());
+            HarmonyInstance.Patch(typeof(Control_GlobalTime).GetMethod("PAUSE"), typeof(MarrowCauldron).GetMethod(nameof(DontRunMe)).ToNewHarmonyMethod());
             #endregion
         }
 

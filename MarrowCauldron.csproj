@@ -7,8 +7,8 @@
     <ProjectGuid>{89BC3C93-9FF5-4DA8-AE43-E98F9F787C49}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PalletFlasks</RootNamespace>
-    <AssemblyName>PalletFlasks</AssemblyName>
+    <RootNamespace>MarrowCauldron</RootNamespace>
+    <AssemblyName>MarrowCauldron</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -35,7 +35,8 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>S:\SteamLibrary\steamapps\common\BONELAB\MelonLoader\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="FieldInjector">
+    <Reference Include="FieldInjector, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>S:\SteamLibrary\steamapps\common\BONELAB\Mods\FieldInjector.dll</HintPath>
     </Reference>
     <Reference Include="Il2Cppmscorlib">
@@ -54,6 +55,10 @@
     <Reference Include="SLZ.Marrow.SDK, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>S:\SteamLibrary\steamapps\common\BONELAB\MelonLoader\Managed\SLZ.Marrow.SDK.dll</HintPath>
+    </Reference>
+    <Reference Include="SLZ.Serialize, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>S:\SteamLibrary\steamapps\common\BONELAB\MelonLoader\Managed\SLZ.Serialize.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
