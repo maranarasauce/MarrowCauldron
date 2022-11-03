@@ -1,4 +1,5 @@
-﻿using MelonLoader;
+﻿using JetBrains.Annotations;
+using MelonLoader;
 using SLZ.Rig;
 using System;
 using System.IO;
@@ -14,6 +15,7 @@ namespace MarrowCauldron
             base.OnInitializeMelon();
             HarmonyInstance.PatchAll(typeof(MarrowCauldron));
 
+            SaveGamePath();
             InjectElixirs();
 #if DEBUG
             #region AntiAntiHeadset
@@ -23,7 +25,35 @@ namespace MarrowCauldron
 #endif
         }
 
-        public void InjectElixirs()
+        private void SaveGamePath()
+        {
+            string savePath = Path.Combine(Application.persistentDataPath, "cauldronsave.txt");
+
+            string thisModPath = Assembly.GetExecutingAssembly().Location;
+            string melonPath = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(thisModPath)), "MelonLoader");
+
+            if (!File.Exists(savePath))
+            {
+                File.Create(savePath).Dispose();
+                WriteGamePath(savePath, melonPath);
+            }
+            else if (File.ReadAllText(savePath) != melonPath)
+            {
+                WriteGamePath(savePath, melonPath);
+            }
+        }
+
+        private void WriteGamePath(string savePath, string melonPath)
+        {
+            var fs = new FileStream(savePath, FileMode.Create);
+            fs.Dispose();
+
+            StreamWriter writer = new StreamWriter(savePath, true);
+            writer.WriteLine(melonPath);
+            writer.Close();
+        }
+
+        private void InjectElixirs()
         {
             foreach (string pallet in Utilities.GetPallets())
             {
