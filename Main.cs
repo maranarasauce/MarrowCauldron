@@ -28,9 +28,7 @@ namespace MarrowCauldron
         private void SaveGamePath()
         {
             string savePath = Path.Combine(Application.persistentDataPath, "cauldronsave.txt");
-
-            string thisModPath = Assembly.GetExecutingAssembly().Location;
-            string melonPath = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(thisModPath)), "MelonLoader");
+            string melonPath = MelonUtils.MelonLoaderDirectory;
 
             if (!File.Exists(savePath))
             {
@@ -62,12 +60,12 @@ namespace MarrowCauldron
                 if (!Directory.Exists(flaskPath))
                     continue;
 
-                string[] flasks = Directory.GetFiles(flaskPath);
+                string[] flasks = Directory.GetFiles(flaskPath, "*.dll");
                 foreach (string flask in flasks)
                 {
                     MelonLogger.Msg($"Loading Flask: \"{flask}\"");
 
-                    Assembly assembly = System.Reflection.Assembly.LoadFile(flask);
+                    Assembly assembly = Assembly.LoadFile(flask);
 
                     Type[] types = assembly.GetTypes();
                     foreach (Type type in types)
