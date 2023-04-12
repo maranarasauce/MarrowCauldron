@@ -2,6 +2,7 @@
 using MelonLoader;
 using SLZ.Rig;
 using System;
+using System.CodeDom;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
@@ -70,8 +71,15 @@ namespace MarrowCauldron
                     Type[] types = assembly.GetTypes();
                     foreach (Type type in types)
                     {
-                        if (typeof(MonoBehaviour).IsAssignableFrom(type))
-                            FieldInjector.SerialisationHandler.Inject(type, 1);
+                        try
+                        {
+                            if (typeof(MonoBehaviour).IsAssignableFrom(type) || typeof(ScriptableObject).IsAssignableFrom(type))
+                                FieldInjector.SerialisationHandler.Inject(type, 0);
+                        }
+                        catch
+                        {
+                            MelonLogger.Msg($"Got error for pouring of Elixir: \"{type.FullName}\"");
+                        }
                     }
                 }
             }
