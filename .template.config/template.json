@@ -1,0 +1,25 @@
+{
+  "author": "SoulWithMae",
+  "name": "BONELAB Mod (0.6.1)",
+  "description": "A BONELAB mod template.",
+  "identity": "SoulWithMae.BonelabClassLib.0.6.1",
+  "shortName": "classlib",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "BONELABTemplate",
+  "symbols": {
+    "Framework": {
+      "type": "parameter",
+      "description": "The target framework for the project.",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "net6"
+        }
+      ],
+      "defaultValue": "net6"
+    }
+  }
+}
