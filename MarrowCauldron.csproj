@@ -56,41 +56,44 @@
 
     <ItemGroup>
 		<Reference Include="0Harmony">
-			<HintPath>Links\MelonLoader\net6\0Harmony.dll</HintPath>
+		  <HintPath>S:\SteamLibrary\steamapps\common\BONELAB\MelonLoader\net6\0Harmony.dll</HintPath>
+		</Reference>
+		<Reference Include="Assembly-CSharp">
+		  <HintPath>S:\SteamLibrary\steamapps\common\BONELAB\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
 		</Reference>
 		<Reference Include="FieldInjector">
-		  <HintPath>..\..\..\..\SteamLibrary\steamapps\common\BONELAB\Mods\FieldInjector.dll</HintPath>
+		  <HintPath>S:\SteamLibrary\steamapps\common\BONELAB\Mods\FieldInjector.dll</HintPath>
+		</Reference>
+		<Reference Include="Il2CppInterop.Runtime">
+		  <HintPath>S:\SteamLibrary\steamapps\common\BONELAB\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
+		</Reference>
+		<Reference Include="Il2Cppmscorlib">
+		  <HintPath>S:\SteamLibrary\steamapps\common\BONELAB\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
 		</Reference>
 		<Reference Include="Il2CppNewtonsoft.Json">
-		  <HintPath>..\..\..\..\SteamLibrary\steamapps\common\BONELAB\MelonLoader\Il2CppAssemblies\Il2CppNewtonsoft.Json.dll</HintPath>
+		  <HintPath>S:\SteamLibrary\steamapps\common\BONELAB\MelonLoader\Il2CppAssemblies\Il2CppNewtonsoft.Json.dll</HintPath>
 		</Reference>
 		<Reference Include="Il2CppSLZ.Marrow">
-		  <HintPath>..\..\..\..\SteamLibrary\steamapps\common\BONELAB\MelonLoader\Il2CppAssemblies\Il2CppSLZ.Marrow.dll</HintPath>
+		  <HintPath>S:\SteamLibrary\steamapps\common\BONELAB\MelonLoader\Il2CppAssemblies\Il2CppSLZ.Marrow.dll</HintPath>
 		</Reference>
 		<Reference Include="Il2CppSLZ.Serialize">
-		  <HintPath>..\..\..\..\SteamLibrary\steamapps\common\BONELAB\MelonLoader\Il2CppAssemblies\Il2CppSLZ.Serialize.dll</HintPath>
+		  <HintPath>S:\SteamLibrary\steamapps\common\BONELAB\MelonLoader\Il2CppAssemblies\Il2CppSLZ.Serialize.dll</HintPath>
 		</Reference>
 		<Reference Include="Il2CppSystem.Core">
-		  <HintPath>..\..\..\..\SteamLibrary\steamapps\common\BONELAB\MelonLoader\Il2CppAssemblies\Il2CppSystem.Core.dll</HintPath>
+		  <HintPath>S:\SteamLibrary\steamapps\common\BONELAB\MelonLoader\Il2CppAssemblies\Il2CppSystem.Core.dll</HintPath>
 		</Reference>
 		<Reference Include="Il2CppSystem.Xml.Linq">
-		  <HintPath>..\..\..\..\SteamLibrary\steamapps\common\BONELAB\MelonLoader\Il2CppAssemblies\Il2CppSystem.Xml.Linq.dll</HintPath>
+		  <HintPath>S:\SteamLibrary\steamapps\common\BONELAB\MelonLoader\Il2CppAssemblies\Il2CppSystem.Xml.Linq.dll</HintPath>
 		</Reference>
-        <Reference Include="MelonLoader">
-            <HintPath>Links\MelonLoader\net6\MelonLoader.dll</HintPath>
-        </Reference>
-        <Reference Include="Assembly-CSharp">
-            <HintPath>Links\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
-        </Reference>
-        <Reference Include="Il2Cppmscorlib">
-            <HintPath>Links\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
-        </Reference>
-        <Reference Include="UnityEngine.CoreModule">
-            <HintPath>Links\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
-        </Reference>
-		<Reference Include="Il2CppInterop.Runtime">
-            <HintPath>Links\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
-        </Reference>
+		<Reference Include="MelonLoader">
+		  <HintPath>S:\SteamLibrary\steamapps\common\BONELAB\MelonLoader\net6\MelonLoader.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.AnimationModule">
+		  <HintPath>S:\SteamLibrary\steamapps\common\BONELAB\MelonLoader\Il2CppAssemblies\UnityEngine.AnimationModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.CoreModule">
+		  <HintPath>S:\SteamLibrary\steamapps\common\BONELAB\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
+		</Reference>
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">

@@ -5,6 +5,13 @@ using Il2CppInterop.Runtime;
 using Il2CppSLZ.Marrow.Warehouse;
 using Il2CppNewtonsoft.Json.Linq;
 using Il2CppSystem.Linq;
+using Il2CppSLZ.Rig;
+using System.Net;
+using Il2CppSLZ.Marrow;
+using Il2CppSLZ.VRMK;
+using System.Runtime.CompilerServices;
+using Avatar = Il2CppSLZ.VRMK.Avatar;
+using static PlayerAvatarArtPatches;
 
 namespace MarrowCauldron;
 
@@ -20,13 +27,16 @@ public class Main : MelonMod
     public override void OnInitializeMelon()
     {
         HarmonyInstance.PatchAll(typeof(Main));
+        //HarmonyInstance.PatchAll(typeof(UpdateAvatarHead));
 
         SaveGamePath();
         InjectElixirs();
     }
 
+
     public override void OnUpdate()
     {
+        
         base.OnUpdate();
         
     }
@@ -114,7 +124,15 @@ public class Main : MelonMod
         }
     }
 
-    [HarmonyPatch(typeof(Pallet), "Unpack")]
+    [HarmonyPatch(typeof(Avatar), nameof(Avatar.Awake))]
+    [HarmonyPrefix]
+    public static void Prefix(Avatar __instance)
+    {
+        avatar = __instance;
+    }
+    public static Avatar avatar;
+
+    [HarmonyPatch(typeof(Pallet), nameof(Pallet.Unpack))]
     [HarmonyPrefix]
     public static void RemoveFlaskReference(Pallet __instance, ref ObjectStore store, string objectId)
     {
