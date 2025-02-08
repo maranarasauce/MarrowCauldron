@@ -114,20 +114,24 @@ public class Main : MelonMod
         }
     }
 
-    [HarmonyPatch(typeof(Avatar), nameof(Avatar.Awake))]
-    [HarmonyPrefix]
-    public static void Prefix(Avatar __instance)
-    {
-        avatar = __instance;
-    }
-
-    public static Avatar avatar;
-
     [HarmonyPatch(typeof(Pallet), nameof(Pallet.Unpack))]
     [HarmonyPrefix]
-    public static void RemoveFlaskReference(Pallet __instance, ref ObjectStore store, string objectId)
+    public static void RemoveFlaskReference(Pallet __instance, ref ObjectStore store)
     {
-        JToken dataCards = store._jsonDocument["objects"]["1"]["dataCards"];
+        if (store == null || __instance == null)
+            return;
+
+        if (store._jsonDocument?.HasValues != true || store._jsonDocument.Count == 0)
+            return;
+
+        JToken dataCards = store._jsonDocument?.Get("objects")?.Get("1")?.Get("dataCards");
+
+        if (dataCards == null)
+        {
+            string pallet = (!string.IsNullOrWhiteSpace(__instance.Title) || !string.IsNullOrWhiteSpace(__instance.Barcode?.ID)) ? $"{__instance.Title ?? "N/A"} ({__instance.Barcode.ID ?? "N/A"})" : "in an unidentifiable pallet";
+            Melon<Main>.Logger.Warning($"Could not find dataCards in {pallet}");
+            return;
+        }
 
         for (int i = 0; i < dataCards.Values<JToken>().Count(); i++)
         {
