@@ -5,13 +5,7 @@ using Il2CppInterop.Runtime;
 using Il2CppSLZ.Marrow.Warehouse;
 using Il2CppNewtonsoft.Json.Linq;
 using Il2CppSystem.Linq;
-using Il2CppSLZ.Rig;
-using System.Net;
-using Il2CppSLZ.Marrow;
-using Il2CppSLZ.VRMK;
-using System.Runtime.CompilerServices;
 using Avatar = Il2CppSLZ.VRMK.Avatar;
-using static PlayerAvatarArtPatches;
 
 namespace MarrowCauldron;
 
@@ -23,22 +17,18 @@ public class Main : MelonMod
     internal const string Company = "Maranara";
     internal const string Version = "2.0.0";
     internal const string DownloadLink = "https://thunderstore.io/c/bonelab/p/Author/BONELABTemplate/";
-    
+
     public override void OnInitializeMelon()
     {
         HarmonyInstance.PatchAll(typeof(Main));
-        //HarmonyInstance.PatchAll(typeof(UpdateAvatarHead));
 
         SaveGamePath();
         InjectElixirs();
     }
 
-
     public override void OnUpdate()
     {
-        
         base.OnUpdate();
-        
     }
 
     private void SaveGamePath()
@@ -102,7 +92,7 @@ public class Main : MelonMod
 
     private const string FLASK_KEY = "Flask";
 
-    [HarmonyPatch(typeof(Il2CppSystem.Type), "GetType", new Type[] { typeof(string)})]
+    [HarmonyPatch(typeof(Il2CppSystem.Type), "GetType", new Type[] { typeof(string) })]
     [HarmonyPrefix]
     public static bool GetType(ref Il2CppSystem.Type __result, string typeName)
     {
@@ -118,25 +108,30 @@ public class Main : MelonMod
     //[HarmonyPrefix]
     public static void TryResolveTypeId(ObjectStore __instance)
     {
-        foreach (var ins  in __instance._types)
+        foreach (var ins in __instance._types)
         {
             MelonLogger.Msg($"[ID] {ins.key.FullName}, {ins.value.ToString()}");
         }
     }
 
-    [HarmonyPatch(typeof(Avatar), nameof(Avatar.Awake))]
-    [HarmonyPrefix]
-    public static void Prefix(Avatar __instance)
-    {
-        avatar = __instance;
-    }
-    public static Avatar avatar;
-
     [HarmonyPatch(typeof(Pallet), nameof(Pallet.Unpack))]
     [HarmonyPrefix]
-    public static void RemoveFlaskReference(Pallet __instance, ref ObjectStore store, string objectId)
+    public static void RemoveFlaskReference(Pallet __instance, ref ObjectStore store)
     {
-        JToken dataCards = store._jsonDocument["objects"]["1"]["dataCards"];
+        if (store == null || __instance == null)
+            return;
+
+        if (store._jsonDocument?.HasValues != true || store._jsonDocument.Count == 0)
+            return;
+
+        JToken dataCards = store._jsonDocument?.Get("objects")?.Get("1")?.Get("dataCards");
+
+        if (dataCards == null)
+        {
+            string pallet = (!string.IsNullOrWhiteSpace(__instance.Title) || !string.IsNullOrWhiteSpace(__instance.Barcode?.ID)) ? $"{__instance.Title ?? "N/A"} ({__instance.Barcode.ID ?? "N/A"})" : "in an unidentifiable pallet";
+            Melon<Main>.Logger.Warning($"Could not find dataCards in {pallet}");
+            return;
+        }
 
         for (int i = 0; i < dataCards.Values<JToken>().Count(); i++)
         {
