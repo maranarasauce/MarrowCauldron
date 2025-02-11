@@ -6,6 +6,7 @@ using Il2CppSLZ.Marrow.Warehouse;
 using Il2CppNewtonsoft.Json.Linq;
 using Il2CppSystem.Linq;
 using Avatar = Il2CppSLZ.VRMK.Avatar;
+using Il2CppSLZ.Bonelab;
 
 namespace MarrowCauldron;
 
@@ -16,7 +17,7 @@ public class Main : MelonMod
     internal const string Author = "Maranara";
     internal const string Company = "Maranara";
     internal const string Version = "2.0.0";
-    internal const string DownloadLink = "https://thunderstore.io/c/bonelab/p/Author/BONELABTemplate/";
+    internal const string DownloadLink = "https://thunderstore.io/c/bonelab/p/Maranara/Marrow_Cauldron/";
 
     public override void OnInitializeMelon()
     {
@@ -57,14 +58,20 @@ public class Main : MelonMod
         writer.Close();
     }
 
-    private void InjectElixirs()
+    private static List<string> injectedPallets;
+    private static void InjectElixirs()
     {
+        if (injectedPallets == null)
+            injectedPallets = new List<string>();
+
         foreach (string pallet in Utilities.GetPallets())
         {
             string flaskPath = Path.Combine(pallet, "flasks");
+            string trimmedPallet = Path.GetDirectoryName(pallet);
 
-            if (!Directory.Exists(flaskPath))
+            if (!Directory.Exists(flaskPath) || injectedPallets.Contains(trimmedPallet))
                 continue;
+            injectedPallets.Add(trimmedPallet);
 
             string[] flasks = Directory.GetFiles(flaskPath, "*.dll");
             foreach (string flask in flasks)
@@ -104,16 +111,6 @@ public class Main : MelonMod
         return true;
     }
 
-    //[HarmonyPatch(typeof(ObjectStore), "TryResolveTypeId")]
-    //[HarmonyPrefix]
-    public static void TryResolveTypeId(ObjectStore __instance)
-    {
-        foreach (var ins in __instance._types)
-        {
-            MelonLogger.Msg($"[ID] {ins.key.FullName}, {ins.value.ToString()}");
-        }
-    }
-
     [HarmonyPatch(typeof(Pallet), nameof(Pallet.Unpack))]
     [HarmonyPrefix]
     public static void RemoveFlaskReference(Pallet __instance, ref ObjectStore store)
@@ -142,5 +139,12 @@ public class Main : MelonMod
                 card.Remove();
             }
         }
+    }
+
+    [HarmonyPatch(typeof(UI_ModGroup), nameof(UI_ModGroup.DownloadComplete))]
+    [HarmonyPostfix]
+    public static void OnDownloadComplete()
+    {
+        InjectElixirs();    
     }
 }
