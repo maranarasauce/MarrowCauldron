@@ -5,8 +5,8 @@ using Il2CppInterop.Runtime;
 using Il2CppSLZ.Marrow.Warehouse;
 using Il2CppNewtonsoft.Json.Linq;
 using Il2CppSystem.Linq;
-using Avatar = Il2CppSLZ.VRMK.Avatar;
 using Il2CppSLZ.Bonelab;
+using static PlayerAvatarArtPatches;
 
 namespace MarrowCauldron;
 
@@ -22,6 +22,8 @@ public class Main : MelonMod
     public override void OnInitializeMelon()
     {
         HarmonyInstance.PatchAll(typeof(Main));
+        HarmonyInstance.PatchAll(typeof(UpdateAvatarHead));
+        HarmonyInstance.PatchAll(typeof(PlayerAvatarArtPatches));
 
         SaveGamePath();
         InjectElixirs();
@@ -147,4 +149,5 @@ public class Main : MelonMod
     {
         InjectElixirs();    
     }
+
 }
