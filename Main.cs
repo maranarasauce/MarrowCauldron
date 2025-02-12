@@ -67,7 +67,7 @@ public class Main : MelonMod
         foreach (string pallet in Utilities.GetPallets())
         {
             string flaskPath = Path.Combine(pallet, "flasks");
-            string trimmedPallet = Path.GetDirectoryName(pallet);
+            string trimmedPallet = Path.GetFileName(pallet);
 
             if (!Directory.Exists(flaskPath) || injectedPallets.Contains(trimmedPallet))
                 continue;
